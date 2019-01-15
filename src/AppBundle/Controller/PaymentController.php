@@ -2,13 +2,17 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Card;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ProductOrder;
 use AppBundle\Service\PaymentInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,7 +44,7 @@ class PaymentController extends AbstractController
         $order->setDescription('Order: ' . $product->getTitle());
         $form = $this->createFormBuilder($order)
             ->add('customerEmail', EmailType::class)
-            ->add('save', SubmitType::class, ['label' => 'Pay'])
+            ->add('pay', SubmitType::class, ['label' => 'Pay'])
             ->getForm();
         $form->handleRequest($request);
 
@@ -63,10 +67,37 @@ class PaymentController extends AbstractController
     /**
      * @Route("/payment/charge/{id}/", name="charge", requirements={"id"="\d+"})
      * @param int $id
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param PaymentInterface $payment
      * @return Response
      */
-    public function chargeAction(int $id): Response
+    public function chargeAction(int $id, Request $request, EntityManagerInterface $entityManager, PaymentInterface $payment): Response
     {
-        return new Response('not implemented');
+        $order = $entityManager->getRepository(ProductOrder::class)->find($id);
+        if (!$order) {
+            throw $this->createNotFoundException();
+        }
+
+        $card = new Card();
+        $form = $this->createFormBuilder($card)
+            ->add('number', TextType::class, ['label' => 'Card number'])
+            ->add('holder', TextType::class, ['label' => 'Card holder'])
+            ->add('expMonth', NumberType::class, ['label' => 'Expiration month'])
+            ->add('expYear', NumberType::class, ['label' => 'Expiration year'])
+            ->add('cvv', PasswordType::class, ['label' => 'CVV'])
+            ->add('pay', SubmitType::class, ['label' => 'Pay'])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $card = $form->getData();
+            $charge = $payment->charge($order, $card);
+        }
+
+        return $this->render('payment/charge.html.twig', [
+            'order' => $order,
+            'form' => $form->createView()
+        ]);
     }
 }
