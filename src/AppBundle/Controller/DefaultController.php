@@ -2,20 +2,25 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Product;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
     /**
      * @Route("/", name="homepage")
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      */
-    public function indexAction(Request $request)
+    public function indexAction(EntityManagerInterface $entityManager): Response
     {
-        // replace this example code with whatever you need
+        $repository = $entityManager->getRepository(Product::class);
+
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'products' => $repository->findAll()
         ]);
     }
 }

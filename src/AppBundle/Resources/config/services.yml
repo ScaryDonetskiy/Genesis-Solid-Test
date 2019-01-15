@@ -1,0 +1,3 @@
+services:
+  AppBundle\Service\SolidGate:
+    arguments: ["%solid.merchant_id%", "%solid.private_key%", "%solid.api_url%"]

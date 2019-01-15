@@ -548,9 +548,7 @@ class SymfonyRequirements extends RequirementCollection
         if (extension_loaded('mbstring')) {
             $this->addPhpIniRequirement(
                 'mbstring.func_overload',
-                function ($cfgValue) {
-                    return (int) $cfgValue === 0;
-                },
+                create_function('$cfgValue', 'return (int) $cfgValue === 0;'),
                 true,
                 'string functions should not be overloaded',
                 'Set "<strong>mbstring.func_overload</strong>" to <strong>0</strong> in php.ini<a href="#phpini">*</a> to disable function overloading by the mbstring extension.'
@@ -699,9 +697,7 @@ class SymfonyRequirements extends RequirementCollection
 
             $this->addPhpIniRecommendation(
                 'intl.error_level',
-                function ($cfgValue) {
-                    return (int) $cfgValue === 0;
-                },
+                create_function('$cfgValue', 'return (int) $cfgValue === 0;'),
                 true,
                 'intl.error_level should be 0 in php.ini',
                 'Set "<strong>intl.error_level</strong>" to "<strong>0</strong>" in php.ini<a href="#phpini">*</a> to inhibit the messages when an error occurs in ICU functions.'
