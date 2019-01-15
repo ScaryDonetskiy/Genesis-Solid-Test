@@ -17,4 +17,11 @@ interface SolidGateInterface
      * @return mixed
      */
     public function initPayment(array $attributes);
+
+    /**
+     * @param array $attributes
+     *
+     * @return mixed
+     */
+    public function refund(array $attributes);
 }

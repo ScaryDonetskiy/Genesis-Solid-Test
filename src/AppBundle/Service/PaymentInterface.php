@@ -15,4 +15,10 @@ interface PaymentInterface
      * @return string
      */
     public function initPayment(OrderInterface $order): string;
+
+    /**
+     * @param OrderInterface $order
+     * @return mixed
+     */
+    public function refund(OrderInterface $order): array;
 }

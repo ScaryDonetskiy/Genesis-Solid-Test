@@ -8,6 +8,8 @@ namespace AppBundle\Entity;
  */
 interface OrderInterface
 {
+    const STATUS_SUCCESS = 'success';
+
     /**
      * @return int
      */

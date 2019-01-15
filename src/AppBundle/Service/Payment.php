@@ -58,4 +58,24 @@ class Payment implements PaymentInterface
 
         return $initPayment['order']['status'];
     }
+
+    /**
+     * @param OrderInterface $order
+     * @return mixed
+     * @throws PaymentException
+     */
+    public function refund(OrderInterface $order): array
+    {
+        $data = $this->solidGate->refund([
+            'order_id' => $order->getId(),
+            'amount' => $order->getAmount()
+        ]);
+
+        if (array_key_exists('error', $data)) {
+            $this->logger->error(json_encode($data['error']));
+            throw new PaymentException($data['error']['code']);
+        }
+
+        return $data;
+    }
 }
