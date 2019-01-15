@@ -45,10 +45,11 @@ class PaymentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var ProductOrder $order */
             $order = $form->getData();
             $entityManager->persist($order);
+            $order->setStatus($payment->initPayment($order));
             $entityManager->flush();
-            $payment->initPayment($order);
 
             return $this->redirectToRoute('charge', ['id' => $order->getId()]);
         }

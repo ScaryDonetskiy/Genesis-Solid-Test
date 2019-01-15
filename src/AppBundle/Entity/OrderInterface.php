@@ -42,4 +42,9 @@ interface OrderInterface
      * @return string
      */
     public function getDescription(): ?string;
+
+    /**
+     * @return string
+     */
+    public function getStatus(): ?string;
 }

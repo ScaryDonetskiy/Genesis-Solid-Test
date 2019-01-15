@@ -35,9 +35,10 @@ class Payment implements PaymentInterface
 
     /**
      * @param OrderInterface $order
+     * @return string
      * @throws PaymentException
      */
-    public function initPayment(OrderInterface $order)
+    public function initPayment(OrderInterface $order): string
     {
         $initPayment = $this->solidGate->initPayment([
             'amount' => $order->getAmount(),
@@ -54,5 +55,7 @@ class Payment implements PaymentInterface
             $this->logger->error(json_encode($initPayment['error']));
             throw new PaymentException($initPayment['error']['code']);
         }
+
+        return $initPayment['order']['status'];
     }
 }

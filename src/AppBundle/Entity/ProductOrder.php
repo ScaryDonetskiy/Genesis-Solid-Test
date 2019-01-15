@@ -67,6 +67,13 @@ class ProductOrder implements OrderInterface
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    private $status;
+
+    /**
      * ProductOrder constructor.
      */
     public function __construct()
@@ -215,6 +222,25 @@ class ProductOrder implements OrderInterface
     public function setDescription(string $description)
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     * @return ProductOrder
+     */
+    public function setStatus(string $status)
+    {
+        $this->status = $status;
 
         return $this;
     }

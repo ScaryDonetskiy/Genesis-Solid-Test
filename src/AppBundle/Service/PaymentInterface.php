@@ -12,6 +12,7 @@ interface PaymentInterface
 {
     /**
      * @param OrderInterface $order
+     * @return string
      */
-    public function initPayment(OrderInterface $order);
+    public function initPayment(OrderInterface $order): string;
 }
