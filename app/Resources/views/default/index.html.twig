@@ -3,11 +3,14 @@
 {% block body %}
     <div id="wrapper">
         <div id="container">
+            <p>Products</p>
             <ul>
                 {% for product in products %}
                     <li>{{ product.title }} - <a href="{{ path('buy', {id: product.id}) }}">Buy</a></li>
                 {% endfor %}
             </ul>
+            <hr>
+            <a href="{{ path('order_list') }}">My orders</a>
         </div>
     </div>
 {% endblock %}
