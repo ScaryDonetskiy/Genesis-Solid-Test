@@ -49,4 +49,9 @@ interface OrderInterface
      * @return string
      */
     public function getStatus(): ?string;
+
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status);
 }

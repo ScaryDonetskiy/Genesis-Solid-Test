@@ -20,6 +20,12 @@ interface SolidGateInterface
 
     /**
      * @param array $attributes
+     * @return mixed
+     */
+    public function charge(array $attributes);
+
+    /**
+     * @param array $attributes
      *
      * @return mixed
      */

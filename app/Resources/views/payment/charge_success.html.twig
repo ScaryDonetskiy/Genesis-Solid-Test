@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <p>Payment for order #{{ order.id }} created</p>
+
+            <a href="{{ path('homepage') }}">Back to homepage</a>
+        </div>
+    </div>
+{% endblock %}
+
