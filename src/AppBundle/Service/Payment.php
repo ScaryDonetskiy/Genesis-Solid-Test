@@ -24,14 +24,21 @@ class Payment implements PaymentInterface
     protected $logger;
 
     /**
+     * @var ProcessingInterface
+     */
+    protected $processing;
+
+    /**
      * Payment constructor.
      * @param SolidGateInterface $solidGate
      * @param LoggerInterface $logger
+     * @param ProcessingInterface $processing
      */
-    public function __construct(SolidGateInterface $solidGate, LoggerInterface $logger)
+    public function __construct(SolidGateInterface $solidGate, LoggerInterface $logger, ProcessingInterface $processing)
     {
         $this->solidGate = $solidGate;
         $this->logger = $logger;
+        $this->processing = $processing;
     }
 
     /**
@@ -60,7 +67,6 @@ class Payment implements PaymentInterface
     /**
      * @param OrderInterface $order
      * @param CardInterface $card
-     * @return mixed
      * @throws PaymentException
      */
     public function charge(OrderInterface $order, CardInterface $card)
@@ -83,7 +89,7 @@ class Payment implements PaymentInterface
 
         $this->checkResponseForErrors($data);
 
-        return $data;
+        $this->processing->updateOrderStatus($order, $data['order']['status']);
     }
 
     /**

@@ -92,7 +92,11 @@ class PaymentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $card = $form->getData();
-            $charge = $payment->charge($order, $card);
+            $payment->charge($order, $card);
+
+            return $this->render('payment/charge_success.html.twig', [
+                'order' => $order
+            ]);
         }
 
         return $this->render('payment/charge.html.twig', [
