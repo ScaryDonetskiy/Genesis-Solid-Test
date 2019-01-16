@@ -5,7 +5,7 @@
         <div id="container">
             <ul>
                 {% for order in orders %}
-                    <li>#{{ order.id }} - {{ order.description }} <a href="{{ path('refund', {id: order.id}) }}">Refund</a></li>
+                    <li>#{{ order.id }} - {{ order.description }} <a href="{{ path('order_status', {id: order.id}) }}">View status</a></li>
                 {% endfor %}
             </ul>
         </div>

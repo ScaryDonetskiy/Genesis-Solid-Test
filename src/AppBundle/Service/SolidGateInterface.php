@@ -30,4 +30,10 @@ interface SolidGateInterface
      * @return mixed
      */
     public function refund(array $attributes);
+
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
+    public function status(array $attributes);
 }

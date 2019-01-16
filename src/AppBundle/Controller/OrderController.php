@@ -26,9 +26,28 @@ class OrderController extends AbstractController
         $repository = $entityManager->getRepository(ProductOrder::class);
 
         return $this->render('order/index.html.twig', [
-            'orders' => $repository->findBy([
-                'status' => OrderInterface::STATUS_SUCCESS
-            ])
+            'orders' => $repository->findAll()
+        ]);
+    }
+
+    /**
+     * @Route("/order/status/{id}", name="order_status", requirements={"id"="\d+"})
+     * @param int $id
+     * @param EntityManagerInterface $entityManager
+     * @param PaymentInterface $payment
+     * @return Response
+     */
+    public function statusAction(int $id, EntityManagerInterface $entityManager, PaymentInterface $payment): Response
+    {
+        $order = $entityManager->getRepository(ProductOrder::class)->find($id);
+        if (!$order) {
+            throw $this->createNotFoundException();
+        }
+
+        $payment->status($order);
+
+        return $this->render('order/status.html.twig', [
+            'order' => $order
         ]);
     }
 
@@ -47,8 +66,6 @@ class OrderController extends AbstractController
         }
 
         $payment->refund($order);
-        $entityManager->remove($order);
-        $entityManager->flush();
 
         return $this->render('order/refund.html.twig');
     }

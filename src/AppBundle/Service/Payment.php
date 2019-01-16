@@ -93,18 +93,6 @@ class Payment implements PaymentInterface
     }
 
     /**
-     * @param array $response
-     * @throws PaymentException
-     */
-    private function checkResponseForErrors(array $response)
-    {
-        if (array_key_exists('error', $response)) {
-            $this->logger->error(json_encode($response['error']));
-            throw new PaymentException($response['error']['code']);
-        }
-    }
-
-    /**
      * @param OrderInterface $order
      * @return mixed
      * @throws PaymentException
@@ -116,11 +104,40 @@ class Payment implements PaymentInterface
             'amount' => $order->getAmount()
         ]);
 
-        if (array_key_exists('error', $data)) {
-            $this->logger->error(json_encode($data['error']));
-            throw new PaymentException($data['error']['code']);
-        }
+        $this->checkResponseForErrors($data);
+
+        $this->processing->updateOrderStatus($order, $data['order']['status']);
 
         return $data;
+    }
+
+    /**
+     * @param OrderInterface $order
+     * @return array
+     * @throws PaymentException
+     */
+    public function status(OrderInterface $order): array
+    {
+        $data = $this->solidGate->status([
+            'order_id' => $order->getId()
+        ]);
+
+        $this->checkResponseForErrors($data);
+
+        $this->processing->updateOrderStatus($order, $data['order']['status']);
+
+        return $data;
+    }
+
+    /**
+     * @param array $response
+     * @throws PaymentException
+     */
+    private function checkResponseForErrors(array $response)
+    {
+        if (array_key_exists('error', $response)) {
+            $this->logger->error(json_encode($response['error']));
+            throw new PaymentException($response['error']['code']);
+        }
     }
 }

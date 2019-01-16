@@ -20,7 +20,6 @@ interface PaymentInterface
     /**
      * @param OrderInterface $order
      * @param CardInterface $card
-     * @return mixed
      */
     public function charge(OrderInterface $order, CardInterface $card);
 
@@ -29,4 +28,10 @@ interface PaymentInterface
      * @return mixed
      */
     public function refund(OrderInterface $order): array;
+
+    /**
+     * @param OrderInterface $order
+     * @return array
+     */
+    public function status(OrderInterface $order): array;
 }

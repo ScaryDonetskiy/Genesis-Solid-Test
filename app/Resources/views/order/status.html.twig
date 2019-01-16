@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <h1>Order #{{ order.id }}</h1>
+            <p>{{ order.description }}</p>
+            <p>Amount: {{ order.amount }}</p>
+            <p>Status: {{ order.status }}</p>
+
+            {% if order.status == 'approved' %}
+                <a href="{{ path('refund', {id: order.id}) }}">Refund</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
