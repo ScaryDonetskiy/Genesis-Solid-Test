@@ -169,7 +169,17 @@ class Payment implements PaymentInterface
     {
         if (isset($response['error'])) {
             $this->logger->error(json_encode($response['error']));
-            throw new PaymentException($response['error']['code']);
+            $errorMessage = [sprintf("Error: %s", $response['error']['code'])];
+            foreach ($response['error']['messages'] as $key => $value) {
+                if (is_array($value)) {
+                    foreach ($value as $item) {
+                        $errorMessage[] = sprintf("%s: %s", $key, $item);
+                    }
+                } else {
+                    $errorMessage[] = $value;
+                }
+            }
+            throw new PaymentException(implode("\n", $errorMessage));
         }
     }
 }
