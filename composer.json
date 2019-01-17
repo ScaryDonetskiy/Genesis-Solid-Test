@@ -1,5 +1,6 @@
 {
   "name": "vladislavpozdnyakov/genesis-solid-test",
+  "description": "Genesis Solid Test Task",
   "license": "proprietary",
   "type": "project",
   "autoload": {
