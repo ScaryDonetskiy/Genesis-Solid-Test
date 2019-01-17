@@ -125,4 +125,3 @@ class CardToken implements CardTokenInterface
         return $this->token;
     }
 }
-

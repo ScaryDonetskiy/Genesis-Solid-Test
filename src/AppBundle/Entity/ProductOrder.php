@@ -245,4 +245,3 @@ class ProductOrder implements OrderInterface
         return $this;
     }
 }
-
