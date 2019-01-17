@@ -11,42 +11,42 @@ interface OrderInterface
     /**
      * @return int
      */
-    public function getId(): ?int;
+    public function getId(): int;
 
     /**
      * @return string
      */
-    public function getCustomerEmail(): ?string;
+    public function getCustomerEmail(): string;
 
     /**
      * @return string
      */
-    public function getGeoCountry(): ?string;
+    public function getGeoCountry(): string;
 
     /**
      * @return string
      */
-    public function getCurrency(): ?string;
+    public function getCurrency(): string;
 
     /**
      * @return string
      */
-    public function getIpAddress(): ?string;
+    public function getIpAddress(): string;
 
     /**
      * @return int
      */
-    public function getAmount(): ?int;
+    public function getAmount(): int;
 
     /**
      * @return string
      */
-    public function getDescription(): ?string;
+    public function getDescription(): string;
 
     /**
      * @return string
      */
-    public function getStatus(): ?string;
+    public function getStatus(): string;
 
     /**
      * @param string $status

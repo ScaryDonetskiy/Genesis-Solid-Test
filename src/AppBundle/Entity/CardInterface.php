@@ -11,25 +11,25 @@ interface CardInterface
     /**
      * @return string|null
      */
-    public function getNumber(): ?string;
+    public function getNumber(): string;
 
     /**
      * @return string|null
      */
-    public function getHolder(): ?string;
+    public function getHolder(): string;
 
     /**
      * @return string|null
      */
-    public function getExpMonth(): ?string;
+    public function getExpMonth(): string;
 
     /**
      * @return string|null
      */
-    public function getExpYear(): ?string;
+    public function getExpYear(): string;
 
     /**
      * @return string|null
      */
-    public function getCvv(): ?string;
+    public function getCvv(): string;
 }

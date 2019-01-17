@@ -9,7 +9,7 @@ namespace AppBundle\Entity;
 interface CardTokenInterface
 {
     /**
-     * @return string|null
+     * @return string
      */
-    public function getToken(): ?string;
+    public function getToken(): string;
 }

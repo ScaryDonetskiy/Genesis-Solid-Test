@@ -48,9 +48,9 @@ class Product
      *
      * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
-        return $this->id;
+        return (int)$this->id;
     }
 
     /**
@@ -72,9 +72,9 @@ class Product
      *
      * @return string
      */
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
-        return $this->title;
+        return (string)$this->title;
     }
 
     /**
@@ -96,9 +96,9 @@ class Product
      *
      * @return string
      */
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
-        return $this->description;
+        return (string)$this->description;
     }
 
     /**
@@ -120,8 +120,8 @@ class Product
      *
      * @return int
      */
-    public function getPrice(): ?int
+    public function getPrice(): int
     {
-        return $this->price;
+        return (int)$this->price;
     }
 }

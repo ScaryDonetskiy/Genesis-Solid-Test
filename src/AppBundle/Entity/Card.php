@@ -36,9 +36,9 @@ class Card implements CardInterface
     /**
      * @return string
      */
-    public function getNumber(): ?string
+    public function getNumber(): string
     {
-        return $this->number;
+        return (string)$this->number;
     }
 
     /**
@@ -52,9 +52,9 @@ class Card implements CardInterface
     /**
      * @return string
      */
-    public function getHolder(): ?string
+    public function getHolder(): string
     {
-        return $this->holder;
+        return (string)$this->holder;
     }
 
     /**
@@ -68,9 +68,9 @@ class Card implements CardInterface
     /**
      * @return string
      */
-    public function getExpMonth(): ?string
+    public function getExpMonth(): string
     {
-        return $this->expMonth;
+        return (string)$this->expMonth;
     }
 
     /**
@@ -84,9 +84,9 @@ class Card implements CardInterface
     /**
      * @return string
      */
-    public function getExpYear(): ?string
+    public function getExpYear(): string
     {
-        return $this->expYear;
+        return (string)$this->expYear;
     }
 
     /**
@@ -100,9 +100,9 @@ class Card implements CardInterface
     /**
      * @return string
      */
-    public function getCvv(): ?string
+    public function getCvv(): string
     {
-        return $this->cvv;
+        return (string)$this->cvv;
     }
 
     /**

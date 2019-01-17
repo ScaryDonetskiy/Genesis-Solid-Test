@@ -60,7 +60,7 @@ class CardToken implements CardTokenInterface
      *
      * @return CardToken
      */
-    public function setCustomerEmail($customerEmail)
+    public function setCustomerEmail(string $customerEmail)
     {
         $this->customerEmail = $customerEmail;
 
@@ -72,9 +72,9 @@ class CardToken implements CardTokenInterface
      *
      * @return string
      */
-    public function getCustomerEmail()
+    public function getCustomerEmail(): string
     {
-        return $this->customerEmail;
+        return (string)$this->customerEmail;
     }
 
     /**
@@ -84,7 +84,7 @@ class CardToken implements CardTokenInterface
      *
      * @return CardToken
      */
-    public function setCardNumber($cardNumber)
+    public function setCardNumber(string $cardNumber)
     {
         $this->cardNumber = $cardNumber;
 
@@ -96,9 +96,9 @@ class CardToken implements CardTokenInterface
      *
      * @return string
      */
-    public function getCardNumber()
+    public function getCardNumber(): string
     {
-        return $this->cardNumber;
+        return (string)$this->cardNumber;
     }
 
     /**
@@ -108,7 +108,7 @@ class CardToken implements CardTokenInterface
      *
      * @return CardToken
      */
-    public function setToken($token)
+    public function setToken(string $token)
     {
         $this->token = $token;
 
@@ -120,8 +120,8 @@ class CardToken implements CardTokenInterface
      *
      * @return string
      */
-    public function getToken(): ?string
+    public function getToken(): string
     {
-        return $this->token;
+        return (string)$this->token;
     }
 }

@@ -87,9 +87,9 @@ class ProductOrder implements OrderInterface
      *
      * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
-        return $this->id;
+        return (int)$this->id;
     }
 
     /**
@@ -111,9 +111,9 @@ class ProductOrder implements OrderInterface
      *
      * @return string
      */
-    public function getCustomerEmail(): ?string
+    public function getCustomerEmail(): string
     {
-        return $this->customerEmail;
+        return (string)$this->customerEmail;
     }
 
     /**
@@ -135,9 +135,9 @@ class ProductOrder implements OrderInterface
      *
      * @return string
      */
-    public function getGeoCountry(): ?string
+    public function getGeoCountry(): string
     {
-        return $this->geoCountry;
+        return (string)$this->geoCountry;
     }
 
     /**
@@ -159,9 +159,9 @@ class ProductOrder implements OrderInterface
      *
      * @return string
      */
-    public function getCurrency(): ?string
+    public function getCurrency(): string
     {
-        return $this->currency;
+        return (string)$this->currency;
     }
 
     /**
@@ -171,9 +171,9 @@ class ProductOrder implements OrderInterface
      *
      * @return ProductOrder
      */
-    public function setIpAddress(string $ipAddress)
+    public function setIpAddress(?string $ipAddress)
     {
-        $this->ipAddress = $ipAddress;
+        $this->ipAddress = (string)$ipAddress;
 
         return $this;
     }
@@ -183,7 +183,7 @@ class ProductOrder implements OrderInterface
      *
      * @return string
      */
-    public function getIpAddress(): ?string
+    public function getIpAddress(): string
     {
         return $this->ipAddress === '127.0.0.1' ? '159.224.217.26' : $this->ipAddress;
     }
@@ -191,9 +191,9 @@ class ProductOrder implements OrderInterface
     /**
      * @return int
      */
-    public function getAmount(): ?int
+    public function getAmount(): int
     {
-        return $this->amount;
+        return (int)$this->amount;
     }
 
     /**
@@ -210,9 +210,9 @@ class ProductOrder implements OrderInterface
     /**
      * @return string
      */
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
-        return $this->description;
+        return (string)$this->description;
     }
 
     /**
@@ -229,9 +229,9 @@ class ProductOrder implements OrderInterface
     /**
      * @return string
      */
-    public function getStatus(): ?string
+    public function getStatus(): string
     {
-        return $this->status;
+        return (string)$this->status;
     }
 
     /**

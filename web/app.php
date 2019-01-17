@@ -8,9 +8,6 @@ if (PHP_VERSION_ID < 70000) {
 }
 
 $kernel = new AppKernel('prod', false);
-if (PHP_VERSION_ID < 70000) {
-    $kernel->loadClassCache();
-}
 
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
