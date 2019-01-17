@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\CardInterface;
+use AppBundle\Entity\CardTokenInterface;
 use AppBundle\Entity\OrderInterface;
 use AppBundle\Exception\PaymentException;
 use Psr\Log\LoggerInterface;
@@ -89,7 +90,12 @@ class Payment implements PaymentInterface
 
         $this->checkResponseForErrors($data);
 
-        $this->processing->updateOrderStatus($order, $data['order']['status']);
+        $transactionId = $data['transaction']['id'];
+        $orderStatus = $this->status($order);
+        if (array_key_exists($transactionId, $orderStatus['transactions'])
+            && array_key_exists('card', $orderStatus['transactions'][$transactionId])) {
+            $this->processing->updateCardToken($order->getCustomerEmail(), $orderStatus['transactions'][$transactionId]['card']);
+        }
     }
 
     /**
@@ -120,6 +126,32 @@ class Payment implements PaymentInterface
     {
         $data = $this->solidGate->status([
             'order_id' => $order->getId()
+        ]);
+
+        $this->checkResponseForErrors($data);
+
+        $this->processing->updateOrderStatus($order, $data['order']['status']);
+
+        return $data;
+    }
+
+    /**
+     * @param OrderInterface $order
+     * @param CardTokenInterface $cardToken
+     * @return array
+     * @throws PaymentException
+     */
+    public function recurring(OrderInterface $order, CardTokenInterface $cardToken): array
+    {
+        $data = $this->solidGate->recurring([
+            'order_id' => $order->getId(),
+            'amount' => $order->getAmount(),
+            'currency' => $order->getCurrency(),
+            'recurring_token' => $cardToken->getToken(),
+            'order_description' => $order->getDescription(),
+            'customer_email' => $order->getCustomerEmail(),
+            'ip_address' => $order->getIpAddress(),
+            'platform' => SolidGateInterface::PLATFORM_WEB
         ]);
 
         $this->checkResponseForErrors($data);

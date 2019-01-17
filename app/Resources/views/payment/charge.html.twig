@@ -8,6 +8,16 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
             {{ form_end(form) }}
+            
+            <ul>
+                {% for token in tokens %}
+                    <li>
+                        <a href="{{ path('recurring', {orderId: order.id, tokenId: token.id}) }}">
+                            Pay with {{ token.cardNumber }} token
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}

@@ -15,4 +15,10 @@ interface ProcessingInterface
      * @param string $status
      */
     public function updateOrderStatus(OrderInterface $order, string $status);
+
+    /**
+     * @param string $customerEmail
+     * @param array $cardData
+     */
+    public function updateCardToken(string $customerEmail, array $cardData);
 }

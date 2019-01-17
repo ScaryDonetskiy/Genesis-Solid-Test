@@ -36,4 +36,10 @@ interface SolidGateInterface
      * @return mixed
      */
     public function status(array $attributes);
+
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
+    public function recurring(array $attributes);
 }

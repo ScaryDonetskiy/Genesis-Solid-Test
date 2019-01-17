@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\CardInterface;
+use AppBundle\Entity\CardTokenInterface;
 use AppBundle\Entity\OrderInterface;
 
 /**
@@ -34,4 +35,11 @@ interface PaymentInterface
      * @return array
      */
     public function status(OrderInterface $order): array;
+
+    /**
+     * @param OrderInterface $order
+     * @param CardTokenInterface $cardToken
+     * @return array
+     */
+    public function recurring(OrderInterface $order, CardTokenInterface $cardToken): array;
 }

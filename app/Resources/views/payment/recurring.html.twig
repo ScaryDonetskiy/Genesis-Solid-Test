@@ -3,8 +3,10 @@
 {% block body %}
     <div id="wrapper">
         <div id="container">
-            <p>Refund was successfully completed</p>
+            <p>Payment for order #{{ order.id }} created by card {{ token.cardNumber }} token</p>
+
             <a href="{{ path('homepage') }}">Back to homepage</a>
         </div>
     </div>
 {% endblock %}
+

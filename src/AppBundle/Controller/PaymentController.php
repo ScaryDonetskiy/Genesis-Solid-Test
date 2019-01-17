@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Card;
+use AppBundle\Entity\CardToken;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ProductOrder;
 use AppBundle\Service\PaymentInterface;
@@ -79,6 +80,10 @@ class PaymentController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        $tokens = $entityManager->getRepository(CardToken::class)->findBy([
+            'customerEmail' => $order->getCustomerEmail()
+        ]);
+
         $card = new Card();
         $form = $this->createFormBuilder($card)
             ->add('number', TextType::class, ['label' => 'Card number'])
@@ -101,7 +106,34 @@ class PaymentController extends AbstractController
 
         return $this->render('payment/charge.html.twig', [
             'order' => $order,
+            'tokens' => $tokens,
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/payment/recurring/{orderId}/{tokenId}/", name="recurring", requirements={"orderId"="\d+", "tokenId"="\d+"})
+     * @param int $orderId
+     * @param int $tokenId
+     * @param EntityManagerInterface $entityManager
+     * @param PaymentInterface $payment
+     * @return Response
+     */
+    public function recurringAction(int $orderId, int $tokenId, EntityManagerInterface $entityManager, PaymentInterface $payment): Response
+    {
+        $order = $entityManager->getRepository(ProductOrder::class)->find($orderId);
+        if (!$order) {
+            throw $this->createNotFoundException();
+        }
+        $token = $entityManager->getRepository(CardToken::class)->find($tokenId);
+        if (!$token) {
+            throw $this->createNotFoundException();
+        }
+        $payment->recurring($order, $token);
+
+        return $this->render('payment/recurring.html.twig', [
+            'order' => $order,
+            'token' => $token
         ]);
     }
 }

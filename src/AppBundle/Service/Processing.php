@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\CardToken;
 use AppBundle\Entity\OrderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -33,5 +34,19 @@ class Processing implements ProcessingInterface
     {
         $order->setStatus($status);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param string $customerEmail
+     * @param array $cardData
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateCardToken(string $customerEmail, array $cardData)
+    {
+        if (array_key_exists('card_token', $cardData)) {
+            $this->entityManager
+                ->getRepository(CardToken::class)
+                ->upsert($customerEmail, $cardData['number'], $cardData['card_token']['token']);
+        }
     }
 }
