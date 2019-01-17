@@ -16,6 +16,7 @@ class CardTokenRepository extends \Doctrine\ORM\EntityRepository
      * @param string $customerEmail
      * @param string $cardNumber
      * @param string $cardToken
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function upsert(string $customerEmail, string $cardNumber, string $cardToken)

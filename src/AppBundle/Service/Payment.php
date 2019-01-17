@@ -92,9 +92,9 @@ class Payment implements PaymentInterface
 
         $transactionId = $data['transaction']['id'];
         $orderStatus = $this->status($order);
-        if (array_key_exists($transactionId, $orderStatus['transactions'])
-            && array_key_exists('card', $orderStatus['transactions'][$transactionId])) {
-            $this->processing->updateCardToken($order->getCustomerEmail(), $orderStatus['transactions'][$transactionId]['card']);
+        if (isset($orderStatus['transactions'][$transactionId]['card'])) {
+            $this->processing->updateCardToken($order->getCustomerEmail(),
+                $orderStatus['transactions'][$transactionId]['card']);
         }
     }
 
@@ -167,7 +167,7 @@ class Payment implements PaymentInterface
      */
     private function checkResponseForErrors(array $response)
     {
-        if (array_key_exists('error', $response)) {
+        if (isset($response['error'])) {
             $this->logger->error(json_encode($response['error']));
             throw new PaymentException($response['error']['code']);
         }

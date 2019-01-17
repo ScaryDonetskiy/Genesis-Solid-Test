@@ -39,11 +39,12 @@ class Processing implements ProcessingInterface
     /**
      * @param string $customerEmail
      * @param array $cardData
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function updateCardToken(string $customerEmail, array $cardData)
     {
-        if (array_key_exists('card_token', $cardData)) {
+        if (isset($cardData['card_token'])) {
             $this->entityManager
                 ->getRepository(CardToken::class)
                 ->upsert($customerEmail, $cardData['number'], $cardData['card_token']['token']);
