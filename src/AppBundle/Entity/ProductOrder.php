@@ -185,6 +185,7 @@ class ProductOrder implements OrderInterface
      */
     public function getIpAddress(): string
     {
+        /** Workaround for local development because gate doesn't work with localhost ip */
         return $this->ipAddress === '127.0.0.1' ? '159.224.217.26' : $this->ipAddress;
     }
 
